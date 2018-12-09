@@ -1,0 +1,39 @@
+{
+  "name": "bfmb-tado-connector",
+  "version": "0.0.0",
+  "description": "Connector to Tado smart thermostats api for BFMBFramework",
+  "main": "./dist/connector.js",
+  "scripts": {
+    "test": "node ./dist/test.js",
+    "clean": "rm -rf ./dist",
+    "build": "gulp",
+    "rebuild": "npm run clean && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BFMBFramework/TadoConnector.git"
+  },
+  "keywords": [
+    "comcenter",
+    "connector",
+    "tado"
+  ],
+  "author": "Ángel González",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BFMBFramework/TadoConnector/issues"
+  },
+  "homepage": "https://github.com/BFMBFramework/TadoConnector#readme",
+  "dependencies": {
+    "bfmb-base-connector": "~0.2.0",
+    "node-tado-client": "^0.1.1"
+  },
+  "peerDependencies": {
+    "bfmb-comcenter": "~0.2.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-typescript": "^3.2.4",
+    "typescript": "^2.7.1"
+  }
+}
