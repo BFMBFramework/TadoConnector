@@ -13,8 +13,8 @@ export class TadoConnector extends Connector {
 
 		connection.login();
 		connection.getClient().getMe().then(function(response: any) {
-			console.log(response);
-			callback(null, response.id)
+			self.connections.push(connection);
+			callback(null, connection.getId());
 		})
 		.catch(function(err : Error) {
 			callback(err);
@@ -22,7 +22,11 @@ export class TadoConnector extends Connector {
 	}
 
 	receiveMessage(id : string, options : any = {}, callback : Function) : void{
-		callback(new Error("Not implemented"));
+		const self = this;
+		const connection : TadoConnection = <TadoConnection> self.getConnection(id);
+		if (connection) {
+
+		}
 	}
 
 	sendMessage(id : string, options : any = {}, callback : Function) : void {
