@@ -9,17 +9,33 @@ class TadoConnector extends bfmb_base_connector_1.Connector {
     addConnection(options, callback) {
         const self = this;
         const connection = new TadoConnection(options);
-        connection.login();
-        connection.getClient().getMe().then(function (response) {
-            console.log(response);
-            callback(null, response.id);
+        connection.getClient()
+            .login(connection.getUsername(), connection.getPassword())
+            .then(function (response) {
+            self.connections.push(connection);
+            callback(null, connection.getId());
         })
             .catch(function (err) {
             callback(err);
         });
     }
+    getMe(id, options = {}, callback) {
+        const self = this;
+        const connection = self.getConnection(id);
+        if (connection) {
+            connection.getClient().getMe().then(function (response) {
+                callback(null, response);
+            })
+                .catch(function (err) {
+                callback(err);
+            });
+        }
+    }
     receiveMessage(id, options = {}, callback) {
-        callback(new Error("Not implemented"));
+        const self = this;
+        const connection = self.getConnection(id);
+        if (connection) {
+        }
     }
     sendMessage(id, options = {}, callback) {
         callback(new Error("Not implemented"));
@@ -33,8 +49,11 @@ class TadoConnection extends bfmb_base_connector_1.Connection {
         this.password = options.password;
         this.tadoClient = new TadoClient();
     }
-    login() {
-        this.tadoClient.login(this.username, this.password);
+    getUsername() {
+        return this.username;
+    }
+    getPassword() {
+        return this.password;
     }
     getClient() {
         return this.tadoClient;

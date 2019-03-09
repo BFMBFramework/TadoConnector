@@ -7,12 +7,13 @@ export class TadoConnector extends Connector {
 		super("Tado");
 	}
 
-	addConnection(options : any, callback : Function) : void {
+	addConnection(options : any, callback : Function): void {
 		const self = this;
 		const connection : TadoConnection = new TadoConnection(options);
 
-		connection.login();
-		connection.getClient().getMe().then(function(response: any) {
+		connection.getClient()
+		.login(connection.getUsername(), connection.getPassword())
+		.then(function(response: any) {
 			self.connections.push(connection);
 			callback(null, connection.getId());
 		})
@@ -21,7 +22,20 @@ export class TadoConnector extends Connector {
 		});
 	}
 
-	receiveMessage(id : string, options : any = {}, callback : Function) : void{
+	getMe(id : string, options : any = {}, callback : Function) : void {
+		const self = this;
+		const connection : TadoConnection = <TadoConnection> self.getConnection(id);
+		if (connection) {
+			connection.getClient().getMe().then(function(response: any) {
+				callback(null, response);
+			})
+			.catch(function(err: Error) {
+				callback(err);
+			});
+		}
+	}
+
+	receiveMessage(id : string, options : any = {}, callback : Function) : void {
 		const self = this;
 		const connection : TadoConnection = <TadoConnection> self.getConnection(id);
 		if (connection) {
@@ -47,8 +61,12 @@ export class TadoConnection extends Connection {
 		this.tadoClient = new TadoClient();
 	}
 
-	login() {
-		this.tadoClient.login(this.username, this.password);
+	getUsername(): string {
+		return this.username;
+	}
+
+	getPassword(): string {
+		return this.password;
 	}
 
 	getClient() : any {

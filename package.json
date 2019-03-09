@@ -4,7 +4,7 @@
   "description": "Connector to Tado smart thermostats api for BFMBFramework",
   "main": "./dist/connector.js",
   "scripts": {
-    "test": "node ./dist/test.js",
+    "test": "./node_modules/.bin/mocha",
     "clean": "rm -rf ./dist",
     "build": "gulp",
     "rebuild": "npm run clean && npm run build"
@@ -34,6 +34,7 @@
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-typescript": "^3.2.4",
+    "mocha": "^5.2.0",
     "typescript": "^2.7.1"
   }
 }
