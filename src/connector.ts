@@ -1,7 +1,18 @@
+/**
+ * This file has both classes required for this module.
+ */
+
 import {Connector, Connection} from "bfmb-base-connector";
 import * as TadoClient from "node-tado-client";
 
+/**
+ * Class TadoConnector. Extends Connector class from bfmb-base-connector module.
+ */ 
 export class TadoConnector extends Connector {
+
+	/**
+	 * This array is required for knowing which functions require the existence of home_id attribute.
+	 */
 	private homeIdRequiredMethods: string[] = [
 	"getHome", "getWeather", "getDevices", "getInstallations",
 	"getUsers", "getState", "getMobileDevices", "getMobileDevice",
@@ -11,24 +22,44 @@ export class TadoConnector extends Connector {
 	"setZoneOverlay"
 	];
 
+	/**
+	 * This array is required for knowing which functions require the existence of device_id attribute.
+	 */
 	private deviceIdRequiredMethods: string[] = [
 	"getMobileDevice", "getMobileDeviceSettings"
 	];
 
+	/**
+	 * This array is required for knowing which functions require the existence of zone_id attribute.
+	 */
 	private zoneIdRequiredMethods: string[] = [
 	"getZoneState", "getZoneCapabilities","getZoneOverlay",
 	"getTimeTables", "getAwayConfiguration", "getTimeTable",
 	"clearZoneOverlay"
 	];
 
+	/**
+	 * This array is required for knowing which functions require the existence of timetable_id attribute.
+	 */
 	private timetableIdRequiredMethods: string[] = ["getTimeTable"];
 
+	/**
+	 * This array is required for knowing which functions require the existence of power, temperature and termination attributes.
+	 */
 	private powerTempRequiredMethods: string[] = ["setZoneOverlay"];
 
+	/**
+	 * The constructor only calls to parent class passing the network identification.
+	 */
 	constructor() {
 		super("Tado");
 	}
 
+	/**
+	 * This method adds a TadoConnection object to the connector.
+	 * @param options A not type-defined object. Requires the attributes **username** and **password** to be valid. Those values are the login data of Tadoº.
+	 * @param callback Callback function which it gives the results or the failure of the task.
+	 */
 	addConnection(options: any, callback: Function): void {
 		const self = this;
 		const connection: TadoConnection = new TadoConnection(options);
@@ -44,6 +75,12 @@ export class TadoConnector extends Connector {
 		});
 	}
 
+	/**
+	 * This method calls to /me endpoint of Tadoº api.
+	 * @param id The uuid of the connection to do the call.
+	 * @param options A not type-defined object. Actually it's empty.
+	 * @param callback Function which return response or error from the connection.
+	 */
 	getMe(id: string, options: any = {}, callback: Function): void {
 		const self = this;
 		const connection: TadoConnection = <TadoConnection> self.getConnection(id);
@@ -57,6 +94,10 @@ export class TadoConnector extends Connector {
 		}
 	}
 
+	/**
+	 * This methods is the universal method for calling get methods of Tado client module.
+	 * @param id The uuid of the connection to do the call.
+	 */
 	receiveMessage(id: string, options: any = {}, callback: Function): void {
 		const self = this;
 		const connection: TadoConnection = <TadoConnection> self.getConnection(id);
