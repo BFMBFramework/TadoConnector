@@ -1,10 +1,22 @@
 "use strict";
+/**
+ * This file has both classes required for this module.
+ */
 Object.defineProperty(exports, "__esModule", { value: true });
 const bfmb_base_connector_1 = require("bfmb-base-connector");
 const TadoClient = require("node-tado-client");
+/**
+ * Class TadoConnector. Extends Connector class from bfmb-base-connector module.
+ */
 class TadoConnector extends bfmb_base_connector_1.Connector {
+    /**
+     * The constructor only calls to parent class passing the network identification.
+     */
     constructor() {
         super("Tado");
+        /**
+         * This array is required for knowing which functions require the existence of home_id attribute.
+         */
         this.homeIdRequiredMethods = [
             "getHome", "getWeather", "getDevices", "getInstallations",
             "getUsers", "getState", "getMobileDevices", "getMobileDevice",
@@ -13,17 +25,34 @@ class TadoConnector extends bfmb_base_connector_1.Connector {
             "getAwayConfiguration", "getTimeTable", "clearZoneOverlay",
             "setZoneOverlay"
         ];
+        /**
+         * This array is required for knowing which functions require the existence of device_id attribute.
+         */
         this.deviceIdRequiredMethods = [
             "getMobileDevice", "getMobileDeviceSettings"
         ];
+        /**
+         * This array is required for knowing which functions require the existence of zone_id attribute.
+         */
         this.zoneIdRequiredMethods = [
             "getZoneState", "getZoneCapabilities", "getZoneOverlay",
             "getTimeTables", "getAwayConfiguration", "getTimeTable",
             "clearZoneOverlay"
         ];
+        /**
+         * This array is required for knowing which functions require the existence of timetable_id attribute.
+         */
         this.timetableIdRequiredMethods = ["getTimeTable"];
+        /**
+         * This array is required for knowing which functions require the existence of power, temperature and termination attributes.
+         */
         this.powerTempRequiredMethods = ["setZoneOverlay"];
     }
+    /**
+     * This method adds a TadoConnection object to the connector.
+     * @param options A not type-defined object. Requires the attributes **username** and **password** to be valid. Those values are the login data of Tadoº.
+     * @param callback Callback function which it gives the results or the failure of the task.
+     */
     addConnection(options, callback) {
         const self = this;
         const connection = new TadoConnection(options);
@@ -37,6 +66,12 @@ class TadoConnector extends bfmb_base_connector_1.Connector {
             callback(err);
         });
     }
+    /**
+     * This method calls to /me endpoint of Tadoº api.
+     * @param id The uuid of the connection to do the call.
+     * @param options A not type-defined object. Actually it's empty.
+     * @param callback Function which return response or error from the connection.
+     */
     getMe(id, options = {}, callback) {
         const self = this;
         const connection = self.getConnection(id);
@@ -49,6 +84,10 @@ class TadoConnector extends bfmb_base_connector_1.Connector {
             });
         }
     }
+    /**
+     * This methods is the universal method for calling get methods of Tado client module.
+     * @param id The uuid of the connection to do the call.
+     */
     receiveMessage(id, options = {}, callback) {
         const self = this;
         const connection = self.getConnection(id);

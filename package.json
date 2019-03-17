@@ -32,9 +32,9 @@
     "bfmb-comcenter": "~0.2.0"
   },
   "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-typescript": "^3.2.4",
+    "gulp": "^4.0.0",
+    "gulp-typescript": "^5.0.1",
     "mocha": "^5.2.0",
-    "typescript": "^2.7.1"
+    "typescript": "^3.3.3333"
   }
 }
