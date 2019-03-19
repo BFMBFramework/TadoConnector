@@ -95,8 +95,10 @@ export class TadoConnector extends Connector {
 	}
 
 	/**
-	 * This methods is the universal method for calling get methods of Tado client module.
+	 * This method is the universal method for calling get methods of Tado client module.
 	 * @param id The uuid of the connection to do the call.
+	 * @param options A not type-defined object. Contains the parameters that the api endpoint require.
+	 * @param callback Function which return response or error from the connection.
 	 */
 	receiveMessage(id: string, options: any = {}, callback: Function): void {
 		const self = this;
@@ -111,6 +113,11 @@ export class TadoConnector extends Connector {
 		}
 	}
 
+	/**
+	 * This method verifies that options object has the required attributes.
+	 * @param options A not type-defined object. Contains the parameters that the api endpoint require.
+	 * @return Error May return an error object if there's some issues with the options object.
+	 */
 	private verifyReceiveMessageBaseOptions(options: any): Error {
 		const self = this;
 		let error: Error
@@ -130,6 +137,13 @@ export class TadoConnector extends Connector {
 		return error;
 	}
 
+	/**
+	 * This method does the calling to Tado api.
+	 * @param connection The connection to Tado api.
+	 * @param options A not type-defined object. Contains the parameters that the api endpoint require.
+	 * @param callback Function which returns any result or error.
+	 * @return Error May return an error object if there's some issues with the options object.
+	 */
 	private callHttpApiGetMethod(connection: TadoConnection, options: any, callback: Function): void {
 		const self = this;
 		if (self.timetableIdRequiredMethods.indexOf(options.api_method) > -1) {
@@ -166,6 +180,12 @@ export class TadoConnector extends Connector {
 		}
 	}
 
+	/**
+	 * This method is the universal method for calling put/post methods of Tado client module.
+	 * @param id The uuid of the connection to do the call.
+	 * @param options A not type-defined object. Contains the parameters that the api endpoint require.
+	 * @param callback Function which return response or error from the connection.
+	 */
 	sendMessage(id: string, options: any = {}, callback: Function): void {
 		const self = this;
 		const connection: TadoConnection = <TadoConnection> self.getConnection(id);
@@ -179,6 +199,11 @@ export class TadoConnector extends Connector {
 		}
 	}
 
+	/**
+	 * This method verifies that options object has the required attributes.
+	 * @param options A not type-defined object. Contains the parameters that the api endpoint require.
+	 * @return Error May return an error object if there's some issues with the options object.
+	 */
 	private verifySendMessageBaseOptions(options: any): Error {
 		const self = this;
 		let error: Error
@@ -197,6 +222,13 @@ export class TadoConnector extends Connector {
 		return error;
 	}
 
+	/**
+	 * This method does the calling to Tado api.
+	 * @param connection The connection to Tado api.
+	 * @param options A not type-defined object. Contains the parameters that the api endpoint require.
+	 * @param callback Function which returns any result or error.
+	 * @return Error May return an error object if there's some issues with the options object.
+	 */
 	private callHttpApiPutMethod(connection: TadoConnection, options: any, callback: Function): void {
 		const self = this;
 		if (self.powerTempRequiredMethods.indexOf(options.api_method) > -1) {
@@ -219,6 +251,9 @@ export class TadoConnector extends Connector {
 	}
 }
 
+/**
+ * TadoConnection is the class which holds the required information and api client. Extends Connection class from bfmb-base-connector module.
+ */
 export class TadoConnection extends Connection {
 	private username: string;
 	private password: string;
