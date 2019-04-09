@@ -1,6 +1,6 @@
 {
   "name": "bfmb-tado-connector",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Connector to Tado smart thermostats api for BFMBFramework",
   "main": "./dist/connector.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "clean": "rm -rf ./dist",
     "build": "gulp",
     "rebuild": "npm run clean && npm run build",
-    "gendocs": "typedoc --out ./docs ./src"
+    "gendocs": "typedoc --out ./docs ./src; touch ./docs/.nojekyll"
   },
   "repository": {
     "type": "git",
@@ -30,12 +30,12 @@
     "node-tado-client": "^0.1.1"
   },
   "peerDependencies": {
-    "bfmb-comcenter": "~0.3.0"
+    "bfmb-comcenter": "~0.5.0"
   },
   "devDependencies": {
     "gulp": "^4.0.0",
     "gulp-typescript": "^5.0.1",
-    "mocha": "^5.2.0",
+    "mocha": "^6.1.2",
     "typescript": "^3.3.3333"
   }
 }

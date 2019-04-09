@@ -85,8 +85,10 @@ class TadoConnector extends bfmb_base_connector_1.Connector {
         }
     }
     /**
-     * This methods is the universal method for calling get methods of Tado client module.
+     * This method is the universal method for calling get methods of Tado client module.
      * @param id The uuid of the connection to do the call.
+     * @param options A not type-defined object. Contains the parameters that the api endpoint require.
+     * @param callback Function which return response or error from the connection.
      */
     receiveMessage(id, options = {}, callback) {
         const self = this;
@@ -102,6 +104,11 @@ class TadoConnector extends bfmb_base_connector_1.Connector {
             callback(optionsError);
         }
     }
+    /**
+     * This method verifies that options object has the required attributes.
+     * @param options A not type-defined object. Contains the parameters that the api endpoint require.
+     * @return Error May return an error object if there's some issues with the options object.
+     */
     verifyReceiveMessageBaseOptions(options) {
         const self = this;
         let error;
@@ -125,6 +132,13 @@ class TadoConnector extends bfmb_base_connector_1.Connector {
         }
         return error;
     }
+    /**
+     * This method does the calling to Tado api.
+     * @param connection The connection to Tado api.
+     * @param options A not type-defined object. Contains the parameters that the api endpoint require.
+     * @param callback Function which returns any result or error.
+     * @return Error May return an error object if there's some issues with the options object.
+     */
     callHttpApiGetMethod(connection, options, callback) {
         const self = this;
         if (self.timetableIdRequiredMethods.indexOf(options.api_method) > -1) {
@@ -160,6 +174,12 @@ class TadoConnector extends bfmb_base_connector_1.Connector {
             });
         }
     }
+    /**
+     * This method is the universal method for calling put/post methods of Tado client module.
+     * @param id The uuid of the connection to do the call.
+     * @param options A not type-defined object. Contains the parameters that the api endpoint require.
+     * @param callback Function which return response or error from the connection.
+     */
     sendMessage(id, options = {}, callback) {
         const self = this;
         const connection = self.getConnection(id);
@@ -174,6 +194,11 @@ class TadoConnector extends bfmb_base_connector_1.Connector {
             callback(optionsError);
         }
     }
+    /**
+     * This method verifies that options object has the required attributes.
+     * @param options A not type-defined object. Contains the parameters that the api endpoint require.
+     * @return Error May return an error object if there's some issues with the options object.
+     */
     verifySendMessageBaseOptions(options) {
         const self = this;
         let error;
@@ -195,6 +220,13 @@ class TadoConnector extends bfmb_base_connector_1.Connector {
         }
         return error;
     }
+    /**
+     * This method does the calling to Tado api.
+     * @param connection The connection to Tado api.
+     * @param options A not type-defined object. Contains the parameters that the api endpoint require.
+     * @param callback Function which returns any result or error.
+     * @return Error May return an error object if there's some issues with the options object.
+     */
     callHttpApiPutMethod(connection, options, callback) {
         const self = this;
         if (self.powerTempRequiredMethods.indexOf(options.api_method) > -1) {
@@ -216,19 +248,37 @@ class TadoConnector extends bfmb_base_connector_1.Connector {
     }
 }
 exports.TadoConnector = TadoConnector;
+/**
+ * TadoConnection is the class which holds the required information and api client. Extends Connection class from bfmb-base-connector module.
+ */
 class TadoConnection extends bfmb_base_connector_1.Connection {
+    /**
+     * The constructor of TadoConnection. Username and password are given by options object.
+     */
     constructor(options) {
         super(options);
         this.username = options.username;
         this.password = options.password;
         this.tadoClient = new TadoClient();
     }
+    /**
+     * This method retrieves the username.
+     * @return string Returns the username.
+     */
     getUsername() {
         return this.username;
     }
+    /**
+     * This method retrieves the password.
+     * @return string Returns the password.
+     */
     getPassword() {
         return this.password;
     }
+    /**
+     * This method retrieves the Tado client object.
+     * @return any Returns the client class.
+     */
     getClient() {
         return this.tadoClient;
     }

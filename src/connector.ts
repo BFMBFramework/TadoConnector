@@ -255,10 +255,22 @@ export class TadoConnector extends Connector {
  * TadoConnection is the class which holds the required information and api client. Extends Connection class from bfmb-base-connector module.
  */
 export class TadoConnection extends Connection {
+	/**
+	 * Username of Tadoº service.
+	 */
 	private username: string;
+	/**
+	 * Password of Tadoº service.
+	 */
 	private password: string;
+	/**
+	 * The node-tado-client class. Defined as any because the Typescript module definitions don't exist.
+	 */
 	private tadoClient: any;
 
+	/**
+	 * The constructor of TadoConnection. Username and password are given by options object.
+	 */
 	constructor(options: any) {
 		super(options);
 		this.username = options.username;
@@ -266,14 +278,26 @@ export class TadoConnection extends Connection {
 		this.tadoClient = new TadoClient();
 	}
 
+	/**
+	 * This method retrieves the username.
+	 * @return string Returns the username.
+	 */
 	getUsername(): string {
 		return this.username;
 	}
 
+	/**
+	 * This method retrieves the password.
+	 * @return string Returns the password.
+	 */
 	getPassword(): string {
 		return this.password;
 	}
 
+	/**
+	 * This method retrieves the Tado client object.
+	 * @return any Returns the client class.
+	 */
 	getClient(): any {
 		return this.tadoClient;
 	}
