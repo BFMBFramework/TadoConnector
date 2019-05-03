@@ -1,6 +1,6 @@
 {
   "name": "bfmb-tado-connector",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Connector to Tado smart thermostats api for BFMBFramework",
   "main": "./dist/connector.js",
   "scripts": {
