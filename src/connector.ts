@@ -35,7 +35,7 @@ export class TadoConnector extends Connector {
 	private zoneIdRequiredMethods: string[] = [
 	"getZoneState", "getZoneCapabilities","getZoneOverlay",
 	"getTimeTables", "getAwayConfiguration", "getTimeTable",
-	"clearZoneOverlay"
+	"setZoneOverlay", "clearZoneOverlay"
 	];
 
 	/**
@@ -214,7 +214,7 @@ export class TadoConnector extends Connector {
 		} else if(self.zoneIdRequiredMethods.indexOf(options.api_method) > -1 && !options.zone_id) {
 			error = new Error("Parameter zone_id is required for the method requested.");
 		} else if(self.powerTempRequiredMethods.indexOf(options.api_method) > -1 
-			&& !options.power && !options.temperature && !options.termination) {
+			&& (!options.power || !options.temperature || !options.termination)) {
 			error = new Error("Parameters power, temperature and termination are required for the method requested.");
 		} else {
 			error = null;

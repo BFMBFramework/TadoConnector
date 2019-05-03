@@ -37,7 +37,7 @@ class TadoConnector extends bfmb_base_connector_1.Connector {
         this.zoneIdRequiredMethods = [
             "getZoneState", "getZoneCapabilities", "getZoneOverlay",
             "getTimeTables", "getAwayConfiguration", "getTimeTable",
-            "clearZoneOverlay"
+            "setZoneOverlay", "clearZoneOverlay"
         ];
         /**
          * This array is required for knowing which functions require the existence of timetable_id attribute.
@@ -212,7 +212,7 @@ class TadoConnector extends bfmb_base_connector_1.Connector {
             error = new Error("Parameter zone_id is required for the method requested.");
         }
         else if (self.powerTempRequiredMethods.indexOf(options.api_method) > -1
-            && !options.power && !options.temperature && !options.termination) {
+            && (!options.power || !options.temperature || !options.termination)) {
             error = new Error("Parameters power, temperature and termination are required for the method requested.");
         }
         else {
